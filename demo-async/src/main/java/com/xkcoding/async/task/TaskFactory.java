@@ -12,12 +12,15 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * 任务工厂
  * </p>
+ *  //@Async("taskExecutor1")这个在类上的话全使用这个线程池来执行任务,优先级高于方法上
  *
  * @author yangkai.shen
  * @date Created in 2018-12-29 10:37
  */
 @Component
 @Log4j2
+
+
 public class TaskFactory {
 
     /**
@@ -32,7 +35,7 @@ public class TaskFactory {
     /**
      * 模拟2秒的异步任务
      */
-    @Async
+    @Async("taskExecutor2")
     public Future<Boolean> asyncTask2() throws InterruptedException {
         doTask("asyncTask2", 2);
         return new AsyncResult<>(Boolean.TRUE);

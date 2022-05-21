@@ -25,10 +25,12 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
     ThreadPoolExecutor threadPool;
 
     /**
-     * 测试异步任务
+     * 测试自定义异步任务
      */
     @Test
-    public void asyncTaskTest2() throws InterruptedException, ExecutionException {
+    public void myAsyncTaskTest() throws InterruptedException, ExecutionException {
+        log.info("测试自定义异步任务");
+
         long start = System.currentTimeMillis();
         Future<Integer> submit1 = threadPool.submit(() -> {
             Thread.currentThread().setName("Data");
@@ -58,9 +60,12 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
 
         long end = System.currentTimeMillis();
         log.info("异步任务全部执行结束，总耗时：{} 毫秒", (end - start));
+        log.info("测试自定义异步任务end---------------");
     }
+
     @Test
     public void asyncTaskTest() throws InterruptedException, ExecutionException {
+        log.info("----------异步----------");
         long start = System.currentTimeMillis();
         Future<Boolean> asyncTask1 = task.asyncTask1();
         Future<Boolean> asyncTask2 = task.asyncTask2();
@@ -73,18 +78,22 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
         long end = System.currentTimeMillis();
 
         log.info("异步任务全部执行结束，总耗时：{} 毫秒", (end - start));
+        log.info("----------异步end----------");
     }
     /**
      * 测试同步任务
      */
     @Test
     public void taskTest() throws InterruptedException {
+        log.info("----------同步end----------");
         long start = System.currentTimeMillis();
         task.task1();
         task.task2();
         task.task3();
         long end = System.currentTimeMillis();
-
         log.info("同步任务全部执行结束，总耗时：{} 毫秒", (end - start));
+        TimeUnit.SECONDS.sleep(4);
+        Thread.sleep(500);
+        log.info("----------同步end----------");
     }
 }
