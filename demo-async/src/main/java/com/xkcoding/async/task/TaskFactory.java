@@ -1,6 +1,6 @@
 package com.xkcoding.async.task;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @date Created in 2018-12-29 10:37
  */
 @Component
-@Slf4j
+@Log4j2
 public class TaskFactory {
 
     /**
@@ -41,7 +41,7 @@ public class TaskFactory {
     /**
      * 模拟3秒的异步任务
      */
-    @Async
+    @Async("taskExecutor2")
     public Future<Boolean> asyncTask3() throws InterruptedException {
         doTask("asyncTask3", 3);
         return new AsyncResult<>(Boolean.TRUE);

@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import javax.annotation.Resource;
+import java.util.concurrent.*;
 
 /**
  * <p>
@@ -21,9 +21,44 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
     @Autowired
     private TaskFactory task;
 
+    @Resource(name = "asyncDataPanelExecutor")
+    ThreadPoolExecutor threadPool;
+
     /**
      * 测试异步任务
      */
+    @Test
+    public void asyncTaskTest2() throws InterruptedException, ExecutionException {
+        long start = System.currentTimeMillis();
+        Future<Integer> submit1 = threadPool.submit(() -> {
+            Thread.currentThread().setName("Data");
+            Thread.sleep(500);
+            log.info("123");
+            return 123;
+        });
+        Future<Integer> submit2 = threadPool.submit(() -> {
+            Thread.sleep(400);
+            log.info("456");
+            return 456;
+        });
+        Future<Integer> submit3 = threadPool.submit(() -> {
+            Integer y = 0 / 10;
+            System.out.println(y);
+            log.info("789");
+            return 789;
+        });
+
+        Integer integer1 = submit1.get();
+        Integer integer2 = submit2.get();
+        Integer integer3 = submit3.get();
+        log.info(" task 结果" + integer1 + "----1");
+        log.info(" task 结果" + integer2 + "----1");
+        log.info(" task 结果{}----1", integer3);
+
+
+        long end = System.currentTimeMillis();
+        log.info("异步任务全部执行结束，总耗时：{} 毫秒", (end - start));
+    }
     @Test
     public void asyncTaskTest() throws InterruptedException, ExecutionException {
         long start = System.currentTimeMillis();
@@ -39,7 +74,6 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
 
         log.info("异步任务全部执行结束，总耗时：{} 毫秒", (end - start));
     }
-
     /**
      * 测试同步任务
      */

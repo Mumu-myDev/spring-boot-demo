@@ -2,7 +2,6 @@ package com.xkcoding.async;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * <p>
@@ -12,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @author yangkai.shen
  * @date Created in 2018-12-29 10:28
  */
-@EnableAsync
+
 @SpringBootApplication
 public class SpringBootDemoAsyncApplication {
 
